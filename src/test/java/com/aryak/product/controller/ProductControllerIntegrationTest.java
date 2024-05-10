@@ -83,6 +83,34 @@ public class ProductControllerIntegrationTest {
                 .andExpect(jsonPath("$.[0].name").value("Iphone 15 pro"));
     }
 
+    @Test
+    @DisplayName(value = "GET product by ID Integration test")
+    @Order(3)
+    void getProductById() throws Exception {
+        long id = 1L;
+        mockMvc.perform(get("/id/"+id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*").exists())
+                .andExpect(jsonPath("$.productId").value(id));
+    }
+
+    @Test
+    @DisplayName(value = "GET product by name Integration test")
+    @Order(4)
+    void getProductByName() throws Exception {
+
+        String name = "Iphone 15 pro";
+
+        mockMvc.perform(get("/"+name)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*").exists())
+                .andExpect(jsonPath("$.[*].name").value(name));
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();

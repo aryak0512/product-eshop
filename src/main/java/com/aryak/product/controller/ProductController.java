@@ -21,19 +21,21 @@ public class ProductController {
     }
 
     @GetMapping(value ="/")
-    public List<Product> getAllProducts(){
+    public ResponseEntity<List<Product>> getAllProducts(){
         log.info("Inside getAllProducts");
-        return productService.getAllProducts();
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping(value ="/{name}")
-    public List<Product> getProductByName(@PathVariable String name){
-        return productService.findProductByName(name);
+    public ResponseEntity<List<Product>> getProductByName(@PathVariable String name){
+        log.info("Getting product by name : {}", name);
+        return new ResponseEntity<>(productService.findProductByName(name), HttpStatus.OK);
     }
 
-    @GetMapping(value ="/id/{id}")
-    public Product getProductById(@PathVariable long id){
-        return productService.findProductById(id);
+    @GetMapping(value = "/id/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable long id) {
+        log.info("Getting product by ID : {}", id);
+        return new ResponseEntity<>(productService.findProductById(id), HttpStatus.OK);
     }
 
     @PostMapping(value ="/add")
