@@ -3,14 +3,18 @@ package com.aryak.product.controller;
 import com.aryak.product.dto.ProductDto;
 import com.aryak.product.model.Product;
 import com.aryak.product.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -32,7 +36,8 @@ public class ProductController {
     }
 
     @PostMapping(value ="/add")
-    public ProductDto addProduct(@RequestBody ProductDto productDto){
-        return productService.addProduct(productDto);
+    public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto){
+        log.info("Add product endpoint called with DTO : {}", productDto);
+        return new ResponseEntity<>(productService.addProduct(productDto), HttpStatus.CREATED);
     }
 }

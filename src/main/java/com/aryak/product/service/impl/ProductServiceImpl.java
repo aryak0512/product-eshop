@@ -1,6 +1,7 @@
 package com.aryak.product.service.impl;
 
 import com.aryak.product.dto.ProductDto;
+import com.aryak.product.dto.ProductDtoMapper;
 import com.aryak.product.exceptions.ProductNotFoundException;
 import com.aryak.product.model.Product;
 import com.aryak.product.repository.ProductRepository;
@@ -18,9 +19,11 @@ import java.util.Optional;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final ProductDtoMapper mapper;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductDtoMapper mapper, ProductRepository productRepository) {
+        this.mapper = mapper;
         this.productRepository = productRepository;
     }
 
@@ -44,12 +47,12 @@ public class ProductServiceImpl implements ProductService {
         return optionalProduct.get();
     }
 
-    /**
-     * @param productDto
-     * @return
-     */
     @Override
     public ProductDto addProduct(ProductDto productDto) {
-        return null;
+
+        // convert DTO to entity
+        Product product = mapper.map(productDto);
+        Product savedProduct = productRepository.save(product);
+        return mapper.mapToDto(savedProduct) ;
     }
 }
