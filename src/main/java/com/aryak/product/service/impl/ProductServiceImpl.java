@@ -50,9 +50,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto addProduct(ProductDto productDto) {
 
-        // convert DTO to entity
         Product product = mapper.map(productDto);
         Product savedProduct = productRepository.save(product);
+        log.info("Saved product to DB : {}", product);
         return mapper.mapToDto(savedProduct) ;
     }
 }

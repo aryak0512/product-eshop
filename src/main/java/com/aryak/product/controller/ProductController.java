@@ -22,6 +22,7 @@ public class ProductController {
 
     @GetMapping(value ="/")
     public List<Product> getAllProducts(){
+        log.info("Inside getAllProducts");
         return productService.getAllProducts();
     }
 
