@@ -63,7 +63,6 @@ public class ProductControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(dto))
                         .accept(MediaType.APPLICATION_JSON))
-
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.*").exists())
                 .andExpect(jsonPath("$.name").value("Iphone 15 pro"));
@@ -79,7 +78,6 @@ public class ProductControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON) )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
-                //.andExpect(jsonPath("$[*]").exists())
                 .andExpect(jsonPath("$.[0].name").value("Iphone 15 pro"));
     }
 

@@ -3,6 +3,7 @@ package com.aryak.product.service.impl;
 import com.aryak.product.exceptions.ProductNotFoundException;
 import com.aryak.product.model.Product;
 import com.aryak.product.repository.ProductRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +27,7 @@ class ProductServiceImplTest {
     private ProductRepository productRepository;
 
     @Test
+    @DisplayName(value = "GET all products - Unit Test")
     void getAllProducts() {
 
         // Mock the behavior of the repository
@@ -43,6 +45,7 @@ class ProductServiceImplTest {
     }
 
     @Test
+    @DisplayName(value = "GET product by name - Unit Test")
     void findProductByName() {
 
         // given
@@ -63,6 +66,7 @@ class ProductServiceImplTest {
     }
 
     @Test
+    @DisplayName(value = "GET product by ID - success")
     void findProductById_success() {
 
         // given
@@ -85,6 +89,7 @@ class ProductServiceImplTest {
     }
 
     @Test
+    @DisplayName(value = "GET product by ID - failure")
     void findProductById_failure() {
 
         // given
