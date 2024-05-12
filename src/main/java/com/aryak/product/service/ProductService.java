@@ -14,4 +14,6 @@ public interface ProductService {
     Product findProductById(long id);
 
     ProductDto addProduct(ProductDto productDto);
+
+    List<ProductDto> addProducts(List<ProductDto> productDtos);
 }

@@ -15,11 +15,7 @@ class ProductDtoMapperTest {
     @DisplayName(value = "Test mapper from entity to DTO")
     void map() {
 
-        ProductDto dto = ProductDto.builder()
-                .description("Latest Iphone")
-                .name("Iphone 15 pro")
-                .price(267.00)
-                .build();
+        ProductDto dto = ProductDto.builder().description("Latest Iphone").name("Iphone 15 pro").price(267.00).build();
         Product product = mapper.map(dto);
         assertThat(product.getName()).isEqualTo(dto.getName());
         assertThat(product.getDescription()).isEqualTo(dto.getDescription());

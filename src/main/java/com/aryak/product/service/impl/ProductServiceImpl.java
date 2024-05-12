@@ -7,13 +7,11 @@ import com.aryak.product.model.Product;
 import com.aryak.product.repository.ProductRepository;
 import com.aryak.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The type Product service.
@@ -25,9 +23,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductDtoMapper mapper;
 
-    public ProductServiceImpl(ProductDtoMapper mapper, ProductRepository productRepository) {
-        this.mapper = mapper;
+    public ProductServiceImpl(ProductRepository productRepository, ProductDtoMapper mapper) {
         this.productRepository = productRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -43,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findProductById(long id) {
 
-        Optional<Product> optionalProduct = productRepository.findById((int) id);
+        Optional<Product> optionalProduct = productRepository.findByProductId(id);
         if ( optionalProduct.isEmpty() ) {
             throw new ProductNotFoundException(3000, "Product with ID :" + id + " does not exist!");
         }
@@ -57,5 +55,25 @@ public class ProductServiceImpl implements ProductService {
         Product savedProduct = productRepository.save(product);
         log.info("Saved product to DB : {}", product);
         return mapper.mapToDto(savedProduct) ;
+    }
+
+    /**
+     * @param productDtos
+     * @return
+     */
+    @Override
+    public List<ProductDto> addProducts(List<ProductDto> productDtos) {
+
+        List<Product> products = productDtos.stream()
+                .map(mapper::map)
+                .toList();
+
+        var savedProducts = productRepository.saveAll(products);
+        log.info("Saved products to DB : {}", savedProducts);
+
+        return savedProducts.stream()
+                .map(mapper::mapToDto)
+                .toList();
+
     }
 }

@@ -43,4 +43,10 @@ public class ProductController {
         log.info("Add product endpoint called with DTO : {}", productDto);
         return new ResponseEntity<>(productService.addProduct(productDto), HttpStatus.CREATED);
     }
+
+    @PostMapping(value ="/addBulk")
+    public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<ProductDto> productDtos){
+        log.info("Add products endpoint called with DTO : {}", productDtos);
+        return new ResponseEntity<>(productService.addProducts(productDtos), HttpStatus.CREATED);
+    }
 }

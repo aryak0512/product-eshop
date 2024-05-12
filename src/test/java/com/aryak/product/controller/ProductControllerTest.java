@@ -88,11 +88,7 @@ class ProductControllerTest {
     @DisplayName(value = "ADD product test")
     void addProduct() throws Exception {
 
-        ProductDto dto = ProductDto.builder()
-                .description("Latest Iphone")
-                .name("Iphone 15 pro")
-                .price(267.00)
-                .build();
+        ProductDto dto = ProductDto.builder().description("Latest Iphone").name("Iphone 15 pro").price(267.00).build();
 
         when(productService.addProduct(dto)).thenReturn(dto);
 
