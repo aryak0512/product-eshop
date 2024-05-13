@@ -8,8 +8,7 @@ import com.aryak.product.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
@@ -131,17 +131,21 @@ class ProductServiceImplTest {
         ProductDto productDto = ProductDto.builder().description("Latest Iphone").name("Iphone 15 pro").price(270.00).build();
         Product product = Product.builder().description("Latest Iphone").name("Iphone 15 pro").price(270.00).build();
 
+        ArgumentCaptor<Product> productArgumentCaptor = forClass(Product.class);
+        InOrder inOrder = inOrder(mapper, productRepository);
         // when
         when(mapper.map(productDto)).thenReturn(product);
-        when(productRepository.save(product)).thenReturn(product);
+        when(productRepository.save(productArgumentCaptor.capture())).thenReturn(product);
         when(mapper.mapToDto(product)).thenReturn(productDto);
         var dto = productService.addProduct(productDto);
 
-        /** behaviour verification **/
-        verify(mapper, times(1)).mapToDto(product);
-        verify(mapper).map(productDto);
-        verify(productRepository).save(product);
+        Product value = productArgumentCaptor.getValue();
+        assertEquals(270.00, value.getPrice());
+        inOrder.verify(mapper).map(productDto);
+        inOrder.verify(productRepository).save(product);
+        inOrder.verify(mapper, times(1)).mapToDto(product);
         assertThat(dto.getPrice()).isEqualTo(270.00);
 
     }
+
 }

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * The type Product service.
@@ -58,8 +57,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * @param productDtos
-     * @return
      */
     @Override
     public List<ProductDto> addProducts(List<ProductDto> productDtos) {
@@ -75,5 +72,9 @@ public class ProductServiceImpl implements ProductService {
                 .map(mapper::mapToDto)
                 .toList();
 
+    }
+
+    public Product getDiscountedProducts(int discountRate){
+        throw new AssertionError("not yet implemented!");
     }
 }
