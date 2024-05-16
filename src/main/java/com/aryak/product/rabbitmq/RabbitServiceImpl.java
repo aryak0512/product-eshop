@@ -1,10 +1,9 @@
 package com.aryak.product.rabbitmq;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public non-sealed class RabbitServiceImpl extends RabbitService {
 
     private RabbitTemplate rabbitTemplate;
