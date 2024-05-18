@@ -22,13 +22,13 @@ pipeline {
                      script {
                         // Set the MAVEN_OPTS environment variable with the secret
                         env.MAVEN_OPTS = "-Djasypt.encryptor.password=${JASYPT_PASSWORD}"
-
+                        sh "Opts : "
                         // Run the Maven build
                         sh "mvn --version"
                         sh "docker --version"
                         sh "java --version"
                         echo "Building..."
-                        sh "mvn clean install"
+                        sh "mvn clean install -Djasypt.encryptor.password=${JASYPT_PASSWORD}"
                      }
                  }
             }
@@ -37,7 +37,7 @@ pipeline {
         stage("test") {
             steps {
                 echo "Testing..."
-                sh "mvn test"
+                sh "mvn test -Djasypt.encryptor.password=${JASYPT_PASSWORD}"
             }
         }
 
