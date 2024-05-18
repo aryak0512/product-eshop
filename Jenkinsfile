@@ -11,19 +11,26 @@ pipeline {
 
         // adding docker and maven to path
         PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
-
-        MAVEN_OPTS = "-Djasypt.encryptor.password=aryak"
     }
 
     stages {
 
         stage("build") {
             steps {
-                sh "mvn --version"
-                sh "docker --version"
-                sh "java --version"
-                echo "Building..."
-                sh "mvn clean install"
+                 // Retrieve the secret JVM parameter from Jenkins credentials
+                 withCredentials([string(credentialsId: 'JASYPT_PASSWORD', variable: 'JASYPT_PASSWORD')]) {
+                     script {
+                        // Set the MAVEN_OPTS environment variable with the secret
+                        env.MAVEN_OPTS = "-Djasypt.encryptor.password=${JASYPT_PASSWORD}"
+
+                        // Run the Maven build
+                        sh "mvn --version"
+                        sh "docker --version"
+                        sh "java --version"
+                        echo "Building..."
+                        sh "mvn clean install"
+                     }
+                 }
             }
         }
 
