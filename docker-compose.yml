@@ -10,23 +10,3 @@ services:
       POSTGRES_DB: eshop
     ports:
       - "5433:5432"
-    networks:
-      - aryak-network
-
-  eshop-app:
-    image: aryak0512/eshop:latest
-    container_name: eshop
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5434/eshop
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    depends_on:
-      - postgres
-    ports:
-      - "8082:8080"
-    networks:
-      - aryak-network
-
-networks:
-  aryak-network:
