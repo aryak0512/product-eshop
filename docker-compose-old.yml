@@ -22,9 +22,9 @@ services:
     image: aryak0512/eshop:latest
     container_name: eshop
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5432/eshop
-      SPRING_DATASOURCE_USERNAME: ENC(4+jyV/8QVvIOUGsFyWHA4yaYPL1iZibXgXHdvUSo4MbZDqTomubI83x0wtiaUCwr)
-      SPRING_DATASOURCE_PASSWORD: ENC(5dpaJhc5Hb/9eQ/T9dYek/5fm8WyNzWdeQ7M2j62Lk0PBwbNkFrkQLwEJffGzVRb)
+      #SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5432/eshop
+      #SPRING_DATASOURCE_USERNAME: ENC(4+jyV/8QVvIOUGsFyWHA4yaYPL1iZibXgXHdvUSo4MbZDqTomubI83x0wtiaUCwr)
+      #SPRING_DATASOURCE_PASSWORD: ENC(5dpaJhc5Hb/9eQ/T9dYek/5fm8WyNzWdeQ7M2j62Lk0PBwbNkFrkQLwEJffGzVRb)
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       postgres:
