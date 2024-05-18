@@ -21,7 +21,7 @@ pipeline {
                  withCredentials([string(credentialsId: 'JASYPT_PASSWORD', variable: 'JASYPT_PASSWORD')]) {
                      script {
                         // Set the MAVEN_OPTS environment variable with the secret
-                        env.MAVEN_OPTS = "-Djasypt.encryptor.password=${JASYPT_PASSWORD}"
+                        echo "JASYPT_PASSWORD: ${JASYPT_PASSWORD}"
                         // Run the Maven build
                         sh "mvn --version"
                         sh "docker --version"
