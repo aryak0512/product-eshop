@@ -30,7 +30,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "8900:8080"
+      - "8900:8900"
     networks:
       - aryak-network
 
