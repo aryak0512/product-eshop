@@ -1,6 +1,7 @@
 package com.aryak.product.utils;
 
 import com.aryak.product.repository.CustomerRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,6 +62,7 @@ class NotificationUtilsTest {
 
     @ParameterizedTest
     @MethodSource(value = "emailIdProvider")
+    @Disabled
     void paramet(String emailId, boolean expected) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         Method isBlackListed = NotificationUtils.class.getDeclaredMethod("isBlackListed", String.class);

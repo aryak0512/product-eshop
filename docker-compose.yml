@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: eshop
+    ports:
+      - "5434:5432"
+    networks:
+      - aryak-network
+
+  eshop-app:
+    image: aryak0512/my-app:latest
+    container_name: my-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5434/eshop
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - postgres
+    ports:
+      - "8081:8081"
+    networks:
+      - aryak-network
+
+networks:
+  aryak-network:

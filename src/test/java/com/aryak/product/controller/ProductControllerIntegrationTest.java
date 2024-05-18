@@ -31,9 +31,9 @@ public class ProductControllerIntegrationTest {
 
     @DynamicPropertySource
     public static void configureProps(DynamicPropertyRegistry registry){
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("eshop.datasource.url", postgres::getJdbcUrl);
+        registry.add("eshop.datasource.username", postgres::getUsername);
+        registry.add("eshop.datasource.password", postgres::getPassword);
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "update");
         registry.add("spring.jpa.show-sql", () -> true);
     }
@@ -59,7 +59,7 @@ public class ProductControllerIntegrationTest {
                 .price(267.00)
                 .build();
 
-        mockMvc.perform(post("/add")
+        mockMvc.perform(post("/products/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(dto))
                         .accept(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ public class ProductControllerIntegrationTest {
     @Order(2)
     void getAllProducts() throws Exception {
 
-        mockMvc.perform(get("/")
+        mockMvc.perform(get("/products/")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON) )
                 .andExpect(status().isOk())
@@ -86,7 +86,7 @@ public class ProductControllerIntegrationTest {
     @Order(3)
     void getProductById() throws Exception {
         long id = 1L;
-        mockMvc.perform(get("/id/"+id)
+        mockMvc.perform(get("/products/id/"+id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -101,7 +101,7 @@ public class ProductControllerIntegrationTest {
 
         String name = "Iphone 15 pro";
 
-        mockMvc.perform(get("/"+name)
+        mockMvc.perform(get("/products/"+name)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

@@ -2,9 +2,11 @@ package com.aryak.product.controller;
 
 import com.aryak.product.dto.ProductDto;
 import com.aryak.product.model.Product;
+
 import com.aryak.product.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -45,7 +47,7 @@ class ProductControllerTest {
 
         when(productService.getAllProducts()).thenReturn(List.of(product));
 
-        mockMvc.perform(get("/")
+        mockMvc.perform(get("/products/")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON) )
                 .andExpect(status().isOk())
@@ -55,12 +57,13 @@ class ProductControllerTest {
 
     @Test
     @DisplayName(value = "GET product by name test")
+    @Order(3)
     void getProductByName() throws Exception {
 
         String name = "Iphone 15";
         when(productService.findProductByName(name)).thenReturn(List.of(product));
 
-        mockMvc.perform(get("/" + name)
+        mockMvc.perform(get("/products/" + name)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON) )
                 .andExpect(status().isOk())
@@ -71,12 +74,13 @@ class ProductControllerTest {
 
     @Test
     @DisplayName(value = "GET product by ID test")
+    @Order(2)
     void getProductById() throws Exception {
 
         var id = 565436;
         when(productService.findProductById(id)).thenReturn(product);
 
-        mockMvc.perform(get("/id/" + id)
+        mockMvc.perform(get("/products/id/" + id)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON) )
                 .andExpect(status().isOk())
@@ -86,13 +90,14 @@ class ProductControllerTest {
 
     @Test
     @DisplayName(value = "ADD product test")
+    @Order(1)
     void addProduct() throws Exception {
 
         ProductDto dto = ProductDto.builder().description("Latest Iphone").name("Iphone 15 pro").price(267.00).build();
 
         when(productService.addProduct(dto)).thenReturn(dto);
 
-        mockMvc.perform(post("/add")
+        mockMvc.perform(post("/products/add")
                           .contentType(MediaType.APPLICATION_JSON)
                           .content(asJsonString(dto))
                           .accept(MediaType.APPLICATION_JSON))
