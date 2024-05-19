@@ -13,6 +13,7 @@ import org.springdoc.webmvc.ui.SwaggerWelcomeWebMvc;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import org.springframework.context.annotation.Profile;
 
 /**
  * This class is a Swagger configuration class.
@@ -22,7 +23,7 @@ import io.swagger.v3.oas.models.info.Info;
  * @since 19/02/2023
  */
 @Configuration
-//@Profile(value = { "dev", "qa", "uat" })
+@Profile(value = { "dev", "qa", "uat" })
 public class OpenApiConfiguration {
 
     @Bean
@@ -47,9 +48,9 @@ public class OpenApiConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnProperty(name = { "springdoc.use-management-port" }, havingValue = "false", matchIfMissing = true)
     public SwaggerWelcomeWebMvc swaggerWelcome(	SwaggerUiConfigProperties swaggerUiConfig,
-                                                   SpringDocConfigProperties springDocConfigProperties,
-                                                   SwaggerUiConfigParameters swaggerUiConfigParameters,
-                                                   SpringWebProvider springWebProvider) {
+                                                SpringDocConfigProperties springDocConfigProperties,
+                                                SwaggerUiConfigParameters swaggerUiConfigParameters,
+                                                SpringWebProvider springWebProvider) {
 
         return new SwaggerWelcomeWebMvc(swaggerUiConfig, springDocConfigProperties, swaggerUiConfigParameters, springWebProvider);
     }
